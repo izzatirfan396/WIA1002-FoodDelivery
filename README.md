@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WIA1002 Smart Food Delivery System
 
 **Course:** WIA1002 Data Structures  
@@ -35,3 +36,6 @@
 ## Running the project
 
 Open in NetBeans → Run `Main.java`
+=======
+# WIA1002-FoodDelivery
+>>>>>>> f2a408b7ea42d984cb2cee13447f368bdfcfd591
