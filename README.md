@@ -9,7 +9,7 @@
 
 | Member | Module | Package | Data Structures |
 |--------|--------|---------|----------------|
-| M1 (Leader) | User & Restaurant Management | `fooddelivery.users` | ArrayList / LinkedList |
+| M1 (Leader) | User & Restaurant Management | `fooddelivery.users` `fooddelivery.app` | ArrayList / LinkedList |
 | M2 | Order Processing + Undo | `fooddelivery.orders` | Queue, Stack |
 | M3 | Rider Assignment | `fooddelivery.riders` | Priority Queue (Min-Heap) |
 | M4 | Route Finder | `fooddelivery.routes` | Graph, Dijkstra |
