@@ -1,0 +1,23 @@
+# NetBeans project files
+nbproject/private/
+nbproject/Makefile-*.mk
+nbproject/Package-*.bash
+build/
+dist/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE misc
+*.class
+*.jar
+*.war
+*.log
+
+# Keep these (do NOT ignore):
+# nbproject/project.xml
+# nbproject/project.properties
