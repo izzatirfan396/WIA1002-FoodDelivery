@@ -2,7 +2,7 @@
 # WIA1002 Smart Food Delivery System
 
 **Course:** WIA1002 Data Structures  
-**Group:** [Group Name/Number]  
+**Group:** 7
 **Deadline:** 12 June 2026
 
 ## Members & Modules
