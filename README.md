@@ -28,7 +28,7 @@
 ## How to contribute
 
 1. Clone the repo
-2. Checkout your feature branch: `git checkout feature/your-branch`
+2. Checkout your feature branch: `git checkout -b feature/your-branch`
 3. Code your module inside your package only
 4. Commit and push regularly
 5. Open a Pull Request into `dev` when your module is ready
