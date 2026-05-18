@@ -7,6 +7,7 @@ dist/
 nbbuild/
 nbdist/
 .nb-gradle/
+target/
 
 # OS files
 .DS_Store
@@ -18,10 +19,6 @@ Thumbs.db
 *.war
 *.log
 
-<<<<<<< HEAD
-# Keep these (do NOT ignore):
-=======
-# Keep these (do NOT ignore)
->>>>>>> f2a408b7ea42d984cb2cee13447f368bdfcfd591
+
 # nbproject/project.xml
 # nbproject/project.properties
