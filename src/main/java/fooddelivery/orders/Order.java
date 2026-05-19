@@ -2,7 +2,7 @@ package fooddelivery.orders;
 
 /**
  * Represents a food order placed by a customer.
- * Member: [M2 Name]
+ * Member: FARISH CHAI
  */
 public class Order {
 
@@ -22,10 +22,62 @@ public class Order {
         this.status = "PENDING";
     }
 
-    // TODO (M2): add getters, setters, and toString() below
+    // --- GETTERS ---
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public String getFoodItem() {
+        return foodItem;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    // --- SETTERS ---
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public void setFoodItem(String foodItem) {
+        this.foodItem = foodItem;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    // --- TO STRING ---
 
     @Override
     public String toString() {
-        return "Order{id='" + orderId + "', item='" + foodItem + "', status='" + status + "'}";
+        return "Order{id='" + orderId + "', item='" + foodItem + "', price=" + totalPrice + ", status='" + status + "'}";
     }
 }

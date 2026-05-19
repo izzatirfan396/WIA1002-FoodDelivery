@@ -2,31 +2,61 @@ package fooddelivery.orders;
 
 /**
  * Undo last order cancellation using a Stack.
- * Member: [M2 Name]
+ * Member: FARISH CHAI
  *
  * Data Structure: Stack (linked-list based, implement manually)
  * Responsibilities:
- *   - Push a cancelled order onto the stack
- *   - Pop (undo) the last cancellation
+ * - Push a cancelled order onto the stack
+ * - Pop (undo) the last cancellation
  */
 public class UndoStack {
 
-    // TODO (M2): implement your Stack node and fields here
+    // Private Node class to represent links in the custom stack
+    private static class Node {
+        Order data;
+        Node next;
 
+        Node(Order data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    private Node top; // Points to the top element of the stack (LIFO access point)
     private int size;
 
     public UndoStack() {
-        // TODO (M2): initialise top, size
+        this.top = null;
         this.size = 0;
     }
 
     public void push(Order order) {
-        // TODO (M2): push a cancelled order onto the stack
+        if (order == null) return;
+
+        Node newNode = new Node(order);
+        
+        // Link the new node to point to the current top node
+        newNode.next = top;
+        // Move the top pointer to point to our brand new node
+        top = newNode;
+        
+        size++;
+        System.out.println("Order #" + order.getOrderId() + " pushed to undo history stack.");
     }
 
     public Order pop() {
-        // TODO (M2): undo — pop the last cancelled order
-        return null;
+        if (isEmpty()) {
+            System.out.println("Stack Underflow: No actions available to undo.");
+            return null;
+        }
+
+        // Keep a reference to the data we want to return
+        Order poppedOrder = top.data;
+        // Shift the top pointer down to the next node in the chain
+        top = top.next;
+        
+        size--;
+        return poppedOrder;
     }
 
     public boolean isEmpty() {
