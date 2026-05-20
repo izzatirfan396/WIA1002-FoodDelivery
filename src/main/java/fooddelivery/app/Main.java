@@ -1,4 +1,4 @@
-package fooddelivery.main;
+package fooddelivery.app;
 
 import fooddelivery.users.UserManager;
 import fooddelivery.orders.OrderQueue;
