@@ -72,6 +72,22 @@ public class MyLinkedList<E> {
     current.next = newNode;
     size++; 
     }
+} 
+    public E get(int index){
+    Node<E> temp ;
+    if(index<0 || index >= size){
+        throw new IndexOutOfBoundsException();
+    }else{
+        temp = head;
+        for (int i = 0; i <=index ; i++) {
+            if(i==index){
+                break;
+            }
+            temp=temp.next ;
+        }
+
+    }
+    return temp.element ;
 }
     
     
