@@ -27,6 +27,8 @@ public class Main {
         System.out.println("==========================================");
         System.out.println("     SMART FOOD DELIVERY SYSTEM");
         System.out.println("==========================================");
+        
+        UserManager um = new UserManager(); //create the object of user manager to use the first case which to manage the user 
 
         do {
             System.out.println("\n--- MAIN MENU ---");
@@ -36,14 +38,14 @@ public class Main {
             System.out.println("4. Route Finder");
             System.out.println("5. Food Search");
             System.out.println("0. Exit");
-            System.out.print("Enter choice: ");
+            System.out.println("------------------------------------");
+            System.out.println("Enter choice: ");
 
             choice = InputHelper.readInt(sc);
 
             switch (choice) {
                 case 1:
-                    // TODO (M1): call UserManager menu
-                    System.out.println("[Module 1 - User & Restaurant Management] Coming soon.");
+                    um.showMenu(sc);
                     break;
                 case 2:
                     // TODO (M2): call OrderQueue menu

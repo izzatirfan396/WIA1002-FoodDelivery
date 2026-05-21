@@ -29,6 +29,24 @@ public class UserManager {
         }
         System.out.println("");
     }
+    
+     public User findUserById(String ic){
+        for (int i = 0; i < userList.size; i++) {
+            if(userList.get(i).getId().equals(ic)){
+                return userList.get(i);
+            }
+        }
+        return null ;
+    }
+    
+    public boolean checkUserId(String ic){
+        for (int i = 0; i < userList.size; i++) {
+            if(userList.get(i).getId().equals(ic)){
+                return false;
+            }
+        }
+        return true ;
+    }
 
     public void addRestaurant( Restaurant e ){
         restaurantList.add(e);
@@ -45,10 +63,36 @@ public class UserManager {
         System.out.println("");
     }
     
+    public Restaurant findRestaurantById(String id){
+        for (int i = 0; i < restaurantList.size; i++) {
+            if(restaurantList.get(i).getId().equals(id)){
+                return restaurantList.get(i);
+            }
+        }
+        return null ;
+    }
+    
+    public boolean checkRestaurantId(String id){
+        for (int i = 0; i < restaurantList.size; i++) {
+            if(restaurantList.get(i).getId().equals(id)){
+                return false;
+            }
+        }
+        return true ;
+    }
+    
    
     
-    public void showMenu() { 
-        Scanner sc = new Scanner(System.in);
+    public void showMenu(Scanner sc) { 
+        
+        
+        int choice ;
+        String id ; 
+        String name ;
+        String phone ; 
+        String address ; 
+        
+    do{
         System.out.println("--- User & Restaurant Management ---");
         System.out.println();
         System.out.println("1. Register New User ");
@@ -58,24 +102,123 @@ public class UserManager {
         System.out.println("5. Remove Restaurant");
         System.out.println("6. Display All Restaurant");
         System.out.println("0. Exit");
-        
-        System.out.print("Enter choice: ");
-        
-        int choice = InputHelper.readInt(sc);
+        System.out.println("------------------------------------");    
+        System.out.println("Enter choice: ");
+        choice = InputHelper.readInt(sc);
+        System.out.println();
         
         switch(choice){
             case 1 :
-                System.out.print("Enter IC number  : ");
-                String ic = InputHelper.readString(sc);
+                
+                System.out.println("Enter IC number  : ");
+                 id = InputHelper.readString(sc);
                 System.out.println();
                 
-                System.out.print("Enter name : ");
-                String name = InputHelper.readString(sc);
+                if(checkUserId(id)){ //Check to ensure that no duplicated id is entered (ID should be unique)
+                
+                System.out.println("Enter name : ");
+                 name = InputHelper.readString(sc);
                 System.out.println();
                 
-                System.out.print("Enter phone number : ");
-                String phone = InputHelper.readString(sc);
+                System.out.println("Enter phone number : ");
+                 phone = InputHelper.readString(sc);
+                System.out.println();
+                
+                System.out.println("Enter Address : ");
+                 address = InputHelper.readString(sc);
+                System.out.println();
+                
+                userList.add(new User(id , name , phone , address ));
+                System.out.println("User succesfully registered ! ");
+                
+                }else{
+                    System.out.println("IC entered is already registered !");
+                }
+                break;
+                
+            case 2 : { // this curly braces indicate this block of codes so that the variable target declared here only belong in this block not for other cases
+                System.out.println("Enter the IC user want to be delete : ");
+                id = InputHelper.readString(sc);
+                User targetUser = findUserById(id); // save the user that contain the id entered to variable "target"
+                if(targetUser!=null){ //if the user exist it wont equal to null 
+                    userList.remove(targetUser); // remove the user
+                    System.out.println("Succesfully removed !"); 
+                }else{
+                    System.out.println("Invalid IC entered.");
+                }
+                break ;
+            }    
+            case 3 : 
+                if(userList.size>0){
+                System.out.printf("%-15s %-20s %-12s %-10s%n", "ID", "Name", "Phone", "Address" ); //display all the user in formatted and clean way
+                for (int i = 0; i < userList.size; i++) {
+                     id = userList.get(i).getId();
+                     name = userList.get(i).getName();
+                     phone = userList.get(i).getPhone();
+                     address = userList.get(i).getAddress();
+                System.out.printf("%-15s %-20s %-12s %-10s%n", id, name, phone, address);
+                }
+                }else{
+                    System.out.println("There is no User registered !");
+                }
+                break ; 
+                
+            case 4 :
+                System.out.println("Enter ID number  : ");
+                 id = InputHelper.readString(sc);
+                System.out.println();
+                
+                if(checkRestaurantId(id)){
+                
+                System.out.println("Enter name : ");
+                 name = InputHelper.readString(sc);
+                System.out.println();
+                
+                System.out.println("Enter Address : ");
+                 address = InputHelper.readString(sc);
+                System.out.println();
+                
+                restaurantList.add(new Restaurant(id , name , address ));
+                System.out.println("Restaurant succesfully registered ! ");
+                }else{
+                    System.out.println("ID is already taken !");
+                }
+                break;
+                
+            case 5 : { // this curly braces indicate this block of codes so that the variable target declared here only belong in this block not for other cases
+                System.out.println("Enter the ID user want to be delete : ");
+                id = InputHelper.readString(sc);
+                Restaurant targetRestaurant = findRestaurantById(id); // save the restaurant object that contain the id entered to variable "target"
+                if(targetRestaurant!=null){ //if the restaurant  exist it wont equal to null 
+                    restaurantList.remove(targetRestaurant); // remove the restaurant
+                    System.out.println("Succesfully removed !"); 
+                }else{
+                    System.out.println("Invalid ID entered.");
+                }
+                break ;
+            }   
+            case 6 : 
+                if(restaurantList.size>0){
+                System.out.printf("%-15s %-20s %-10s%n ", "ID", "Name", "Address" ); //display all the user in formatted and clean way
+                for (int i = 0; i < restaurantList.size; i++) {
+                     id = restaurantList.get(i).getId();
+                     name = restaurantList.get(i).getName();
+                     address = restaurantList.get(i).getAddress();
+                System.out.printf("%-15s %-20s %-10s%n", id, name, address);
+                }
+                }else{
+                    System.out.println("There is no Restaurant registered !");
+                }
+                break ;    
+                
+            case 0 :
+                System.out.println("Returning to Main Menu !");
+                break;
+                
+                
+        
         }
+    } while(choice!=0) ;
        
     }
 

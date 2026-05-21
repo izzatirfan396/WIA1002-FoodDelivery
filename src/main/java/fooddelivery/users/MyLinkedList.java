@@ -35,7 +35,7 @@ public class MyLinkedList<E> {
     
     }
     
-    public void addLast(E e){
+    public void addLast(E e){ //USER MANAGER 
         
         Node<E> newNode = new Node<>(e);
         if(head == null){
@@ -73,7 +73,7 @@ public class MyLinkedList<E> {
     size++; 
     }
 } 
-    public E get(int index){
+    public E get(int index){ //USER MANAGER 
     Node<E> temp ;
     if(index<0 || index >= size){
         throw new IndexOutOfBoundsException();
@@ -152,7 +152,7 @@ size--;
 return temp.element ;
 }
 
-public String remove(E e){
+public String remove(E e){ // USER MANAGER
 
     if(head == null){
         return "There is no User/Restaurant stored in the list";
@@ -192,7 +192,7 @@ public void add(E e){
     
 }
 
-public boolean contains(E e ){
+public boolean contains(E e ){ // USER MANAGER
     
     Node<E> current = head ; 
     for (int i = 0; i < size; i++) {
