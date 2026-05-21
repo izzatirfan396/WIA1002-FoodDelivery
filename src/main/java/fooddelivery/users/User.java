@@ -8,7 +8,7 @@ public class User {
     private String address;
 
     //assigning the user id , name , phone number , and address to the object
-    public User(String userId, String name, String phone, String address) {
+    public User(String userId, String name, String phone, String address) { 
         this.userId = userId;
         this.name = name;
         this.phone = phone;

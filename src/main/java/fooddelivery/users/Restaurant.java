@@ -10,7 +10,8 @@ public class Restaurant {
     private String name;
     private String address;
 
-    public Restaurant(String restaurantId, String name, String address) {
+    //assigning the passed id , name , and address of a restaurant created 
+    public Restaurant(String restaurantId, String name, String address) { 
         this.restaurantId = restaurantId;
         this.name = name;
         this.address = address;

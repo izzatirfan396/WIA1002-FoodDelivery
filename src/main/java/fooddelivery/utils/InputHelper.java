@@ -3,15 +3,10 @@ package fooddelivery.utils;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * Shared utility class for safe Scanner input.
- * Used by ALL modules — do not modify without informing the group.
- */
+ //Shared utility class for safe Scanner input without buffer (USED BY ALL MODULE FOR INPUT)
 public class InputHelper {
 
-    /**
-     * Reads an integer safely. Re-prompts on invalid input.
-     */
+    //Reads an integer safely. Re-prompts on invalid input.
     public static int readInt(Scanner sc) {
         while (true) {
             try {
@@ -25,9 +20,7 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Reads a double safely. Re-prompts on invalid input.
-     */
+    //Reads a double safely. Re-prompts on invalid input.
     public static double readDouble(Scanner sc) {
         while (true) {
             try {
@@ -41,9 +34,7 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Reads a non-empty string. Re-prompts if blank.
-     */
+    //Reads a non-empty string. Re-prompts if blank.
     public static String readString(Scanner sc) {
         String val = sc.nextLine().trim();
         while (val.isEmpty()) {

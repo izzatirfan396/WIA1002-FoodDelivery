@@ -20,7 +20,7 @@ public class MyLinkedList<E> {
     public void addFirst(E e){
         
         Node<E> newNode = new Node<>(e);
-        if(head == null){
+        if(head == null){ //check if the list is empty
             
             head = tail = newNode ;
           
@@ -58,20 +58,20 @@ public class MyLinkedList<E> {
         throw new IndexOutOfBoundsException();
         }
             
-    if (index ==0){
-    addFirst(e);
-    }else if(index==size){
-    addLast(e);
-    }else{
-    Node<E> newNode= new Node<>(e);
-    Node<E> current = head;
-    for(int i = 1; i < index ; i++){
-    current = current.next;
-    }
-    newNode.next = current.next; 
-    current.next = newNode;
-    size++; 
-    }
+        if (index ==0){
+        addFirst(e);
+        }else if(index==size){
+        addLast(e);
+        }else{
+        Node<E> newNode= new Node<>(e);
+        Node<E> current = head;
+        for(int i = 1; i < index ; i++){
+        current = current.next;
+        }
+        newNode.next = current.next; 
+        current.next = newNode;
+        size++; 
+        }
 } 
     public E get(int index){ //USER MANAGER 
     Node<E> temp ;
@@ -91,68 +91,68 @@ public class MyLinkedList<E> {
 }
     
     
-public E removeFirst(){ 
+    public E removeFirst(){ 
+        Node<E> temp;
+    if(head == null){ 
+        return null; 
+    }else{
+    temp = head;
+    head = head.next;
+    if (head == null){
+    tail = head;
+    }
+    size -- ;
+    }
+
+    return temp.element;
+    }
+         public E removeLast(){
     Node<E> temp;
-if(head == null){ 
-    return null; 
-}else{
-temp = head;
-head = head.next;
-if (head == null){
-tail = head;
-}
-size -- ;
-}
+    if(head==null){ 
+        return null;
+    }else if (head==tail){
+    temp = head; 
+    head=tail=null;
+    size-- ;
+    return temp.element ;
+    }else{
+    Node<E> current = head;
+    for(int i = 1; i<size-1 ; i++){
+    current = current.next;
+    }
+    temp = current.next;
+    current.next = null; tail = current; 
+    size--;
+    return temp.element;
+    }
 
-return temp.element;
-}
-     public E removeLast(){
-Node<E> temp;
-if(head==null){ 
+    }    
+
+
+    public E remove(int index) {
+    Node<E> temp;
+    if(index < 0 || index >= size){
     return null;
-}else if (head==tail){
-temp = head; 
-head=tail=null;
-size-- ;
-return temp.element ;
-}else{
-Node<E> current = head;
-for(int i = 1; i<size-1 ; i++){
-current = current.next;
-}
-temp = current.next;
-current.next = null; tail = current; 
-size--;
-return temp.element;
-}
-    
-}    
-     
-     
-public E remove(int index) {
-Node<E> temp;
-if(index < 0 || index >= size){
-return null;
-}
-else if(index==0){
-return removeFirst();
-}
-else if(index == (size-1)){ 
-    return removeLast();
-}
-else{
-Node<E> current=head ;
-for(int i = 1; i<index ; i++){
-current = current.next;
-}
-temp = current.next; 
-current.next = temp.next;
-}
-size--;
-return temp.element ;
-}
+    }
+    else if(index==0){
+    return removeFirst();
+    }
+    else if(index == (size-1)){ 
+        return removeLast();
+    }
+    else{
+    Node<E> current=head ;
+    for(int i = 1; i<index ; i++){
+    current = current.next;
+    }
+    temp = current.next; 
+    current.next = temp.next;
+    }
+    size--;
+    return temp.element ;
+    }
 
-public String remove(E e){ // USER MANAGER
+    public String remove(E e){ // USER MANAGER
 
     if(head == null){
         return "There is no User/Restaurant stored in the list";
@@ -186,39 +186,39 @@ public String remove(E e){ // USER MANAGER
     return "Object not found";
 }
 
-public void add(E e){
+    public void add(E e){
 
-    addLast(e);
-    
-}
+        addLast(e);
 
-public boolean contains(E e ){ // USER MANAGER
-    
-    Node<E> current = head ; 
-    for (int i = 0; i < size; i++) {
-        if(current.element.equals(e) ){
-            return true ;
+    }
+
+    public boolean contains(E e ){ // USER MANAGER
+
+        Node<E> current = head ; 
+        for (int i = 0; i < size; i++) {
+            if(current.element.equals(e) ){
+                return true ;
+            }
+            current = current.next ;
+
         }
-        current = current.next ;
-        
+
+        return false ; 
+
     }
-    
-    return false ; 
-    
-}
 
 
-public void clear(){
-    
-    Node<E> temp = head ;
-    for (int i = 0; i < size; i++) {
-        temp = head.next ; 
-        head.next = null ; 
-        head = temp;
+    public void clear(){
+
+        Node<E> temp = head ;
+        for (int i = 0; i < size; i++) {
+            temp = head.next ; 
+            head.next = null ; 
+            head = temp;
+        }
+        tail = null ;
+        size=0;
+
     }
-    tail = null ;
-    size=0;
-    
-}
 
 }
