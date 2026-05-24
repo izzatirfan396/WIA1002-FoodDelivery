@@ -2,7 +2,7 @@ package fooddelivery.riders;
 
 /**
  * Represents a delivery rider.
- * Member: [M3 Name]
+ * Member: HARIZ ARFAN
  */
 public class Rider {
 
@@ -31,6 +31,26 @@ public class Rider {
     }
 
     // TODO (M3): add remaining getters, setters, and toString() below
+    
+    public String getRiderId() {
+        return riderId;
+    }
+    
+    public void setRiderId(String riderId) {
+        this.riderId = riderId;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name){ 
+        this.name = name;
+    }
+    
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
     @Override
     public String toString() {

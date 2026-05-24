@@ -15,8 +15,8 @@ import java.util.Scanner;
  * WIA1002 Data Structures Group Project
  * Smart Food Delivery System
  *
- * Group Leader: [Your Name]
- * Members: [M1], [M2], [M3], [M4], [M5]
+ * Group Leader: [IZZAT IRFAN]
+ * Members: [IZZAT IRFAN], [FARISH CHAI], [HARIZ ARFAN], [HARITH DANISH], [ZUL DANIAL]
  */
 public class Main {
 
@@ -29,6 +29,7 @@ public class Main {
         System.out.println("==========================================");
         
         UserManager um = new UserManager(); //create the object of user manager to use the first case which to manage the user 
+        RiderPriorityQueue rpq = new RiderPriorityQueue();
 
         do {
             System.out.println("\n--- MAIN MENU ---");
@@ -54,6 +55,7 @@ public class Main {
                 case 3:
                     // TODO (M3): call RiderPriorityQueue menu
                     System.out.println("[Module 3 - Rider Assignment] Coming soon.");
+                    rpq.showMenu(sc);
                     break;
                 case 4:
                     // TODO (M4): call Dijkstra menu
