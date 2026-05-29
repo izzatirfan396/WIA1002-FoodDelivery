@@ -2,12 +2,12 @@ package fooddelivery.search;
 
 /**
  * Represents a food item stored in the BST.
- * Member: [M5 Name]
+ * Member: ZUL DANIAL
  */
 public class FoodItem {
 
     private String itemId;
-    private String name;       // BST key — sorted alphabetically by name
+    private String name;       
     private String category;
     private double price;
     private String restaurantId;
@@ -28,10 +28,21 @@ public class FoodItem {
         return price;
     }
 
-    // TODO (M5): add remaining getters and toString()
+    public String getItemId() {
+        return itemId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
 
     @Override
     public String toString() {
-        return String.format("%-20s | %-15s | RM%.2f", name, category, price);
+        return String.format("ID: %-6s | Name: %-20s | Category: %-12s | Price: RM%.2f | RestID: %s", 
+                itemId, name, category, price, restaurantId);
     }
 }
