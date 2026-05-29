@@ -4,10 +4,7 @@ import java.util.HashMap;
 
 /**
  * Fast lookup cache using HashMap.
- * Member: [M5 Name]
- *
- * Data Structure: HashMap
- * Use case: quickly retrieve a FoodItem by its ID without traversing the BST.
+ * Member: ZUL DANIAL
  */
 public class DataCache {
 
@@ -34,7 +31,6 @@ public class DataCache {
     }
 
     public void displayAll() {
-        // TODO (M5): iterate and print all cached items
         for (String key : cache.keySet()) {
             System.out.println(key + " => " + cache.get(key));
         }
