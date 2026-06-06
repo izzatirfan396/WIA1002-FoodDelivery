@@ -24,55 +24,31 @@ public class Order {
 
     // --- GETTERS ---
 
-    public String getOrderId() {
-        return orderId;
-    }
+    public String getOrderId() { return orderId; }
 
-    public String getUserId() {
-        return userId;
-    }
+    public String getUserId() { return userId; }
 
-    public String getRestaurantId() {
-        return restaurantId;
-    }
+    public String getRestaurantId() { return restaurantId; }
 
-    public String getFoodItem() {
-        return foodItem;
-    }
+    public String getFoodItem() { return foodItem; }
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
+    public double getTotalPrice() { return totalPrice;}
 
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() { return status; }
 
     // --- SETTERS ---
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
+    public void setOrderId(String orderId) { this.orderId = orderId; }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    public void setUserId(String userId) { this.userId = userId; }
 
-    public void setRestaurantId(String restaurantId) {
-        this.restaurantId = restaurantId;
-    }
+    public void setRestaurantId(String restaurantId) { this.restaurantId = restaurantId; }
 
-    public void setFoodItem(String foodItem) {
-        this.foodItem = foodItem;
-    }
+    public void setFoodItem(String foodItem) { this.foodItem = foodItem; }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+    public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setStatus(String status) { this.status = status; }
 
     // --- TO STRING ---
 

@@ -8,6 +8,9 @@ import fooddelivery.utils.InputHelper;
 import fooddelivery.routes.Dijkstra;
 import fooddelivery.routes.Graph;
 import fooddelivery.routes.Location;
+import fooddelivery.orders.Order;
+import fooddelivery.orders.OrderQueue;
+import fooddelivery.orders.UndoStack;
 import java.util.Scanner;
 
 public class Main {
@@ -22,7 +25,10 @@ public class Main {
         FoodBST foodMenu = new FoodBST(dataCache);
         Graph mapGraph = new Graph();
         Dijkstra routeFinder = new Dijkstra(mapGraph);
-
+        OrderQueue orderQueue = new OrderQueue();
+        UndoStack undoStack = new UndoStack();
+        int orderIdCounter = 1;
+        
         do {
             System.out.println("\n==========================================");
             System.out.println("      SMART FOOD DELIVERY SYSTEM");
@@ -49,7 +55,7 @@ public class Main {
                     um.showMenu(sc);
                     break;
                 case 2:
-                    System.out.println("[Module 2 - Order Processing] Coming soon.");
+                    orderQueue.showMenu(sc, undoStack);
                     break;
                 case 3:
                     rpq.showMenu(sc);
