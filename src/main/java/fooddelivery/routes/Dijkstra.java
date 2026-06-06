@@ -1,166 +1,167 @@
 package fooddelivery.routes;
-import java.util.Scanner;
+
+import fooddelivery.utils.InputHelper;
+import java.util.*;
+
 /**
- * Dijkstra's Shortest Path Algorithm
- * Member: HARITH DANISH
- * Finds the shortest delivery route between two locations.
+ * Module 4 - Route Finder implementing Dijkstra's Algorithm
+ * Member: HARITH
  */
 public class Dijkstra {
-
     private Graph graph;
-    private static final int INF = Integer.MAX_VALUE;
 
     public Dijkstra(Graph graph) {
         this.graph = graph;
     }
 
-    public void findShortestPath(String source, String destination) {
-        int srcIdx = graph.getIndex(source);
-        int destIdx = graph.getIndex(destination);
+    /**
+     * Finds and prints the shortest path and total distance from source to destination.
+     */
+    public void runDijkstra(String source, String destination) {
+        source = source.trim();
+        destination = destination.trim();
 
-        if (srcIdx == -1 || destIdx == -1) {
-            System.out.println("Error: Source or Destination location not found on map.");
+        if (!graph.hasLocation(source) || !graph.hasLocation(destination)) {
+            System.out.println("Error: Source or Destination location does not exist in the map.");
             return;
         }
 
-        int n = graph.getNumLocations();
-        int[][] adjMatrix = graph.getAdjMatrix();
-
-        int[] dist = new int[n];
-        boolean[] visited = new boolean[n];
-        int[] parent = new int[n]; // Array to reconstruct the shortest path route
-
-        // 1. Initialize arrays
+        // Step 0: Create index mappings to map arbitrary string keys to simple arrays
+        List<String> nodes = graph.getAllLocationNames();
+        int n = nodes.size();
+        Map<String, Integer> nameToIdx = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            dist[i] = INF;
-            visited[i] = false;
-            parent[i] = -1;
+            nameToIdx.put(nodes.get(i), i);
         }
+
+        // Step 1: Initialise dist[] array with Integer.MAX_VALUE, set dist[source] = 0
+        int[] dist = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        int srcIdx = nameToIdx.get(source);
         dist[srcIdx] = 0;
 
-        // 3. Main Algorithm loop
-        for (int count = 0; count < n - 1; count++) {
-            // Pick unvisited node with minimum distance
-            int u = findMinDistanceNode(dist, visited, n);
-            if (u == -1 || dist[u] == INF) {
-                break;
+        // Tracks previous node indices for tracing the optimal path backwards
+        int[] parent = new int[n];
+        Arrays.fill(parent, -1);
+
+        // Step 2: Use a visited[] boolean array
+        boolean[] visited = new boolean[n];
+
+        // Step 3: Repeat: pick unvisited node with min dist, mark visited, relax neighbours
+        for (int count = 0; count < n; count++) {
+            // Find unvisited node with minimum distance value
+            int uIdx = -1;
+            int minDist = Integer.MAX_VALUE;
+            for (int i = 0; i < n; i++) {
+                if (!visited[i] && dist[i] < minDist) {
+                    minDist = dist[i];
+                    uIdx = i;
+                }
             }
 
-            // Mark Node as visited
-            visited[u] = true;
+            // If the closest node is unreachable, processing completes
+            if (uIdx == -1) break;
 
-            // Relax neighbors
-            for (int v = 0; v < n; v++) {
-                if (!visited[v] && adjMatrix[u][v] != INF && dist[u] != INF) {
-                    if (dist[u] + adjMatrix[u][v] < dist[v]) {
-                        dist[v] = dist[u] + adjMatrix[u][v];
-                        parent[v] = u;
+            // Mark the chosen node as visited
+            visited[uIdx] = true;
+            String uName = nodes.get(uIdx);
+
+            // Stop calculation early if we have finalized our exact destination target node
+            if (uName.equalsIgnoreCase(destination)) break;
+
+            // Relax neighbors of u
+            List<Graph.Edge> neighbors = graph.getNeighbors(uName);
+            if (neighbors != null) {
+                for (Graph.Edge edge : neighbors) {
+                    int vIdx = nameToIdx.get(edge.getTargetLocation());
+                    int weight = edge.getDistance();
+
+                    if (!visited[vIdx] && dist[uIdx] != Integer.MAX_VALUE 
+                            && dist[uIdx] + weight < dist[vIdx]) {
+                        dist[vIdx] = dist[uIdx] + weight;
+                        parent[vIdx] = uIdx;
                     }
                 }
             }
         }
 
-        // 4. Print results
-        if (dist[destIdx] == INF) {
-            System.out.println("\nNo available route exists between " + source + " and " + destination + ".");
-        } else {
-            System.out.println("\n==========================================");
-            System.out.println("         OPTIMAL DELIVERY ROUTE           ");
-            System.out.println("==========================================");
-            System.out.println("Source:      " + graph.getLocationName(srcIdx));
-            System.out.println("Destination: " + graph.getLocationName(destIdx));
-            System.out.println("Total Cost:  " + dist[destIdx] + " km");
-            System.out.print("Path Taken:  ");
-            printPath(parent, destIdx);
-            System.out.println();
-            System.out.println("==========================================");
-        }
-    }
-
-    private int findMinDistanceNode(int[] dist, boolean[] visited, int n) {
-        int min = INF;
-        int minIndex = -1;
-
-        for (int v = 0; v < n; v++) {
-            if (!visited[v] && dist[v] <= min) {
-                min = dist[v];
-                minIndex = v;
-            }
-        }
-        return minIndex;
-    }
-
-    private void printPath(int[] parent, int currentIdx) {
-        if (currentIdx == -1) {
+        // Step 4: Print the shortest distance and path
+        int destIdx = nameToIdx.get(destination);
+        if (dist[destIdx] == Integer.MAX_VALUE) {
+            System.out.println("No route found from " + source + " to " + destination);
             return;
         }
-        printPath(parent, parent[currentIdx]);
-        if (parent[currentIdx] == -1) {
-            System.out.print(graph.getLocationName(currentIdx));
-        } else {
-            System.out.print(" -> " + graph.getLocationName(currentIdx));
+
+        System.out.println("\n==============================================");
+        System.out.println("SHORTEST ROUTE FOUND");
+        System.out.println("==============================================");
+        System.out.println("Total Delivery Distance: " + dist[destIdx] + " km");
+        
+        // Reconstruct path from target backtracking to origin
+        List<String> path = new ArrayList<>();
+        int curr = destIdx;
+        while (curr != -1) {
+            path.add(nodes.get(curr));
+            curr = parent[curr];
         }
+        Collections.reverse(path);
+
+        System.out.print("Optimal Route Path: ");
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i));
+            if (i < path.size() - 1) System.out.print(" -> ");
+        }
+        System.out.println("\n==============================================");
     }
 
+    /**
+     * Displays sub-menu options for Route Finder interactive operations
+     */
     public void showMenu(Scanner sc) {
-        int subChoice = -1;
+        int choice = -1;
         do {
-            System.out.println("\n=== Module 4: Route Finder Menu ===");
-            System.out.println("1. Add New Location Hub");
-            System.out.println("2. Add Connected Road Network");
-            System.out.println("3. View Entire Network Map Matrix");
-            System.out.println("4. Calculate Shortest Delivery Route (Dijkstra)");
-            System.out.println("0. Back to Main System");
+            System.out.println("\n--- MODULE 4: ROUTE FINDER DELIVERY MAP ---");
+            System.out.println("1. Add Delivery Location Node");
+            System.out.println("2. Add Connected Road Edge");
+            System.out.println("3. View Map Layout Configuration");
+            System.out.println("4. Find Shortest Path Route (Dijkstra)");
+            System.out.println("0. Return to Main Menu");
+            System.out.println("-------------------------------------------");
             System.out.print("Enter choice: ");
+            
+            choice = InputHelper.readInt(sc); // Shared scanner reading utility
 
-            try {
-                subChoice = Integer.parseInt(sc.nextLine());
-            } catch (Exception e) {
-                subChoice = -1;
-            }
-
-            switch (subChoice) {
+            switch (choice) {
                 case 1:
-                    System.out.print("Enter location hub name (e.g. CentralKitchen, HQ): ");
+                    System.out.print("Enter Location Name (e.g. Central Kitchen, Hub A): ");
                     String locName = sc.nextLine().trim();
-                    if (!locName.isEmpty()) {
-                        graph.addLocation(locName);
-                    }
+                    graph.addLocation(locName);
                     break;
                 case 2:
-                    System.out.print("Enter Starting Location: ");
-                    String from = sc.nextLine().trim();
-                    System.out.print("Enter Ending Location: ");
-                    String to = sc.nextLine().trim();
-                    System.out.print("Enter Distance (km): ");
-                    int dist = 0;
-                    try {
-                        dist = Integer.parseInt(sc.nextLine());
-                        if (dist > 0) {
-                            graph.addRoad(from, to, dist);
-                        } else {
-                            System.out.println("Distance must be greater than zero.");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Invalid numeric input for distance.");
-                    }
+                    System.out.print("Enter Starting Location Name: ");
+                    String fromLoc = sc.nextLine().trim();
+                    System.out.print("Enter Target Destination Location Name: ");
+                    String toLoc = sc.nextLine().trim();
+                    System.out.print("Enter Route Distance Separation (in km): ");
+                    int distance = InputHelper.readInt(sc);
+                    graph.addRoad(fromLoc, toLoc, distance);
                     break;
                 case 3:
                     graph.display();
                     break;
                 case 4:
-                    System.out.print("Enter Departure Point: ");
-                    String start = sc.nextLine().trim();
-                    System.out.print("Enter Destination Delivery Point: ");
-                    String end = sc.nextLine().trim();
-                    findShortestPath(start, end);
+                    System.out.print("Enter Starting Node Name: ");
+                    String startNode = sc.nextLine().trim();
+                    System.out.print("Enter Ending Destination Node Name: ");
+                    String endNode = sc.nextLine().trim();
+                    runDijkstra(startNode, endNode);
                     break;
                 case 0:
-                    System.out.println("Exiting Route Finder module...");
+                    System.out.println("Returning back to Main Menu dispatch loop...");
                     break;
                 default:
-                    System.out.println("Invalid selection. Try again.");
+                    System.out.println("Invalid structural selection option. Try again.");
             }
-        } while (subChoice != 0);
+        } while (choice != 0);
     }
 }
