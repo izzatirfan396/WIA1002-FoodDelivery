@@ -1,115 +1,121 @@
 package fooddelivery.routes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Module 4 - Delivery Map using a Weighted Graph
- * Member: HARITH
+ * Member: Module 4 Route Finder Specialist
  *
- * Data Structure: Graph (Adjacency List structure using a Map)
+ * Data Structure: Graph (Adjacency Matrix configuration)
  * Responsibilities:
  * - Add locations (vertices) to the map
  * - Add roads (weighted edges) between locations
  * - Support Dijkstra's algorithm for shortest path
  */
 public class Graph {
-    
-    // Custom internal class to represent a weighted edge/road
-    public static class Edge {
-        String targetLocation;
-        int distance;
 
-        public Edge(String targetLocation, int distance) {
-            this.targetLocation = targetLocation;
-            this.distance = distance;
+    private int[][] adjMatrix; 
+    private Location[] locations;
+    private int numLocations;  
+    private static final int MAX = 20; // Maximum allowed locations
+    private static final int INF = Integer.MAX_VALUE;
+
+    public Graph() {  
+        this.numLocations = 0;  // Initialises graph structure
+        this.locations = new Location[MAX];
+        this.adjMatrix = new int[MAX][MAX];
+        
+        // Initialize weights to Infinity representing unlinked spaces
+        for (int i = 0; i < MAX; i++) {
+            for (int j = 0; j < MAX; j++) {
+                if (i == j) {
+                    adjMatrix[i][j] = 0; // Local path cost is zero
+                } else {
+                    adjMatrix[i][j] = INF;
+                }
+            }
+        }
+    }
+
+    public void addLocation(String name) {  
+        if (numLocations >= MAX) {
+            System.out.println("Error: Graph map has reached maximum capacity!");
+            return;
+        }
+        if (getIdxByName(name) != -1) {
+            System.out.println("Location '" + name + "' already exists in the system mapping.");
+            return;
         }
         
-        public String getTargetLocation() { return targetLocation; }
-        public int getDistance() { return distance; }
+        // Auto-generate a descriptive padded internal ID
+        String autoId = "L" + String.format("%03d", (numLocations + 1));
+        locations[numLocations] = new Location(autoId, name);
+        numLocations++;
+        System.out.println("Successfully added map location: " + name + " (" + autoId + ")");
     }
 
-    private Map<String, List<Edge>> adjList;
-    private int numLocations;
-
-    // Initialise your graph structure
-    public Graph() {
-        this.adjList = new HashMap<>();
-        this.numLocations = 0;
-    }
-
-    // Add a vertex to the graph
-    public void addLocation(String name) {
-        if (name == null || name.trim().isEmpty()) return;
-        String cleanName = name.trim();
-        if (!adjList.containsKey(cleanName)) {
-            adjList.put(cleanName, new ArrayList<>());
-            numLocations++;
-            System.out.println("Location added successfully: " + cleanName);
-        } else {
-            System.out.println("Location already exists: " + cleanName);
-        }
-    }
-
-    // Add a weighted edge between two locations (undirected)
-    public void addRoad(String from, String to, int distance) {
-        if (from == null || to == null) return;
-        String cleanFrom = from.trim();
-        String cleanTo = to.trim();
-
-        // Safety check to ensure both locations exist before joining them
-        if (!adjList.containsKey(cleanFrom) || !adjList.containsKey(cleanTo)) {
-            System.out.println("Error: One or both locations do not exist in the map.");
+    public void addRoad(String from, String to, int distance) {  
+        int u = getIdxByName(from);
+        int v = getIdxByName(to);
+        
+        if (u == -1 || v == -1) {
+            System.out.println("Error: One or both location names could not be verified in the map registry.");
             return;
         }
-
-        // Since it's undirected, add edge in both directions
-        adjList.get(cleanFrom).add(new Edge(cleanTo, distance));
-        adjList.get(cleanTo).add(new Edge(cleanFrom, distance));
-        System.out.println("Road created: " + cleanFrom + " <--> " + cleanTo + " (" + distance + " km)");
+        
+        // Undirected edge tracking representation
+        adjMatrix[u][v] = distance;
+        adjMatrix[v][u] = distance;
+        System.out.println("Road mapped successfully: " + from + " <-> " + to + " (" + distance + "m)");
     }
 
-    // Print the adjacency list
-    public void display() {
-        if (adjList.isEmpty()) {
-            System.out.println("The delivery map is currently empty.");
+    public void display() {  
+        if (numLocations == 0) {
+            System.out.println("\n[The delivery map network contains no node data entries]");
             return;
         }
-        System.out.println("\n--- Delivery Map Layout (Adjacency List) ---");
-        for (Map.Entry<String, List<Edge>> entry : adjList.entrySet()) {
-            System.out.print(entry.getKey() + " connects to: ");
-            List<Edge> edges = entry.getValue();
-            if (edges.isEmpty()) {
-                System.out.print("[No connections]");
-            } else {
-                for (int i = 0; i < edges.size(); i++) {
-                    Edge edge = edges.get(i);
-                    System.out.print(edge.targetLocation + " (" + edge.distance + "km)");
-                    if (i < edges.size() - 1) System.out.print(", ");
+        
+        System.out.println("\n--- Current Delivery Network Layout (Adjacency Matrix) ---");
+        System.out.print(String.format("%-15s", ""));
+        for (int i = 0; i < numLocations; i++) {
+            System.out.print(String.format("%-12s", locations[i].getName()));
+        }
+        System.out.println();
+        
+        for (int i = 0; i < numLocations; i++) {
+            System.out.print(String.format("%-15s", locations[i].getName()));
+            for (int j = 0; j < numLocations; j++) {
+                if (adjMatrix[i][j] == INF) {
+                    System.out.print(String.format("%-12s", "INF"));
+                } else {
+                    System.out.print(String.format("%-12d", adjMatrix[i][j]));
                 }
             }
             System.out.println();
         }
+        System.out.println("---------------------------------------------------------");
     }
 
-    public int getNumLocations() {
-        return numLocations;
+    public int getNumLocations() {  
+        return numLocations;  
     }
-
-    // Helper method that Dijkstra will need to fetch neighbors
-    public List<Edge> getNeighbors(String locationName) {
-        return adjList.get(locationName);
+    
+    // Core Helper operations required to translate labels safely into working array matrix indices
+    public int getIdxByName(String name) {
+        for (int i = 0; i < numLocations; i++) {
+            if (locations[i].getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        return -1;
     }
-
-    // Helper method to verify if a location name is registered in our map
-    public boolean hasLocation(String locationName) {
-        return adjList.containsKey(locationName);
+    
+    public Location getLocationByIdx(int index) {
+        if (index >= 0 && index < numLocations) {
+            return locations[index];
+        }
+        return null;
     }
-
-    // Helper method to pull all unique location names (useful for index-mapping in Dijkstra)
-    public List<String> getAllLocationNames() {
-        return new ArrayList<>(adjList.keySet());
+    
+    public int[][] getAdjMatrix() {
+        return adjMatrix;
     }
 }

@@ -5,6 +5,9 @@ import fooddelivery.riders.RiderPriorityQueue;
 import fooddelivery.search.FoodBST;
 import fooddelivery.search.DataCache;
 import fooddelivery.utils.InputHelper;
+import fooddelivery.routes.Dijkstra;
+import fooddelivery.routes.Graph;
+import fooddelivery.routes.Location;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +20,8 @@ public class Main {
         RiderPriorityQueue rpq = new RiderPriorityQueue();
         DataCache dataCache = new DataCache();
         FoodBST foodMenu = new FoodBST(dataCache);
+        Graph mapGraph = new Graph();
+        Dijkstra routeFinder = new Dijkstra(mapGraph);
 
         do {
             System.out.println("\n==========================================");
@@ -50,7 +55,7 @@ public class Main {
                     rpq.showMenu(sc);
                     break;
                 case 4:
-                    System.out.println("[Module 4 - Route Finder] Coming soon.");
+                    routeFinder.showMenu(sc);  
                     break;
                 case 5:
                     foodMenu.showMenu(sc);

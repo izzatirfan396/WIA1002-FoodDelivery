@@ -1,39 +1,29 @@
 package fooddelivery.routes;
 
 /**
- * Module 4 - Represents a physical location (vertex) on the delivery map.
- * Member: HARITH
+ * Represents a location (node) in the delivery map.
+ * Member: Module 4 Route Finder Specialist
  */
 public class Location {
+
+    private String locationId;
     private String name;
 
-    public Location(String name) {
-        this.name = name;
+    public Location(String locationId, String name) {  
+        this.locationId = locationId;  
+        this.name = name;  
     }
 
-    public String getName() {
-        return name;
+    public String getLocationId() {  
+        return locationId;  
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {  
+        return name;  
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Location location = (Location) obj;
-        return name.equalsIgnoreCase(location.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return name.toLowerCase().hashCode();
-    }
+    @Override  
+    public String toString() {  
+        return name;  
+    }  
 }
