@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 /**
  * Dijkstra's Shortest Path Algorithm
- * Member: Module 4 Route Finder Specialist
- *
+ * Member: HARITH
+ * 
  * Finds the shortest delivery route between two locations.
  */
 public class Dijkstra {
