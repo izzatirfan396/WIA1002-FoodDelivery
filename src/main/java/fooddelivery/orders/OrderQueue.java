@@ -1,14 +1,13 @@
 package fooddelivery.orders;
 
+import fooddelivery.utils.InputHelper;
+import java.util.Scanner;
+
 /**
  * Module 2 - Order Processing using a Queue
  * Member: FARISH CHAI
  *
  * Data Structure: Queue (linked-list based, implement manually)
- * Responsibilities:
- * - Enqueue new orders
- * - Dequeue orders for processing (FIFO)
- * - Display current order queue
  */
 public class OrderQueue {
 
@@ -23,9 +22,13 @@ public class OrderQueue {
         }
     }
 
-    private Node head; // Points to the front of the queue (for dequeue/peek)
-    private Node tail; // Points to the back of the queue (for enqueue)
+    private Node head; // Points to the front of the queue
+    private Node tail; // Points to the back of the queue
     private int size;
+    
+    // FIX 1: Track orderIdCounter as a class-level instance variable 
+    // so it doesn't reset to 1 every time showMenu() is executed.
+    private int orderIdCounter = 1; 
 
     public OrderQueue() {
         this.head = null;
@@ -38,13 +41,12 @@ public class OrderQueue {
         
         Node newNode = new Node(order);
         
-        // If queue is empty, the new node becomes both head and tail
         if (isEmpty()) {
             head = newNode;
             tail = newNode;
         } else {
-            tail.next = newNode; // Link the old tail to the new node
-            tail = newNode;      // Move the tail pointer to the new node
+            tail.next = newNode;
+            tail = newNode; 
         }
         size++;
         System.out.println("Enqueued successfully: " + order.getOrderId());
@@ -57,9 +59,8 @@ public class OrderQueue {
         }
         
         Order removedData = head.data;
-        head = head.next; // Advance the head pointer to the next item
+        head = head.next;
         
-        // If the queue just became empty, clean up the tail pointer too
         if (head == null) {
             tail = null;
         }
@@ -100,10 +101,9 @@ public class OrderQueue {
         }
         System.out.println("----------------------------------");
     }
-
-    public void showMenu(java.util.Scanner sc, UndoStack undoStack) {
+    
+    public void showMenu(Scanner sc, UndoStack undoStack) {
         int orderChoice = -1;
-        int orderIdCounter = 1;
 
         while (true) {
             System.out.println("\n=== Module 2: Order Processing Menu ===");
@@ -116,18 +116,14 @@ public class OrderQueue {
             System.out.println("0. Back to Main System");
             System.out.print("Enter choice: ");
 
-            try {
-                String input = sc.nextLine().trim();
-                if (input.isEmpty()) continue;
-                orderChoice = Integer.parseInt(input);
-            } catch (Exception e) {
-                orderChoice = -1;
-            }
+            // FIX 2: Standardize menu choice parsing using your existing InputHelper
+            orderChoice = InputHelper.readInt(sc);
 
             switch (orderChoice) {
                 case 1:
                     display();
                     break;
+
                 case 2:
                     Order processed = dequeue();
                     if (processed != null) {
@@ -135,20 +131,32 @@ public class OrderQueue {
                         System.out.println("Dispatched to Kitchen: " + processed);
                     }
                     break;
+
                 case 3:
                     Order front = peek();
                     if (front != null) System.out.println("Next up: " + front);
                     break;
-                case 4:
-                    String generatedId = "ORD-" + String.format("%03d", orderIdCounter++);
-                    System.out.print("Enter Food Item: ");
-                    String food = sc.nextLine().trim();
-                    System.out.print("Enter Total Price: ");
-                    double price = 10.0;
-                    try { price = Double.parseDouble(sc.nextLine().trim()); } catch(Exception e){}
 
+                case 4:
+                    System.out.println("\n--- Create Mock Order ---");
+
+                    // FIX 3: Leverage InputHelper to prevent trailing scanner buffer errors
+                    System.out.print("Enter Food Item: ");
+                    String food = InputHelper.readString(sc);
+
+                    System.out.print("Enter Total Price: ");
+                    double price = InputHelper.readDouble(sc);
+                    
+                    while (price < 0) {
+                        System.out.print("[ERROR]: Price cannot be negative. Re-enter Price: ");
+                        price = InputHelper.readDouble(sc);
+                    }
+
+                    String generatedId = "ORD-" + String.format("%03d", orderIdCounter++);
+                    System.out.println("\nExecuting operational enqueue...");
                     enqueue(new Order(generatedId, "USER-101", "REST-707", food, price));
                     break;
+
                 case 5:
                     Order toCancel = dequeue();
                     if (toCancel != null) {
@@ -157,6 +165,7 @@ public class OrderQueue {
                         System.out.println("Cancelled: " + toCancel.getOrderId() + " moved to history.");
                     }
                     break;
+
                 case 6:
                     Order revertedOrder = undoStack.pop();
                     if (revertedOrder != null) {
@@ -165,12 +174,14 @@ public class OrderQueue {
                         System.out.println("Restored back to queue: " + revertedOrder.getOrderId());
                     }
                     break;
+
                 case 0:
                     System.out.println("Returning to Core Panel...");
-                    return; // Exits your sub-menu loop completely
+                    return; 
+
                 default:
                     System.out.println("Invalid option.");
             }
         }
-    }
+    } 
 }
