@@ -25,13 +25,13 @@ public class UserManager {
     
     public void displayUser(){
          if(userList.size>0){
-                System.out.printf("%-15s %-20s %-12s %-10s%n", "ID", "Name", "Phone", "Address" ); //display all the user in formatted and clean way
+                System.out.printf("%-15s %-30s %-12s %-10s%n", "ID", "Name", "Phone", "Address" ); //display all the user in formatted and clean way
                 for (int i = 0; i < userList.size; i++) {
                     String id = userList.get(i).getId();
                     String name = userList.get(i).getName();
                     String phone = userList.get(i).getPhone();
                     String address = userList.get(i).getAddress();
-                System.out.printf("%-15s %-20s %-12s %-10s%n", id, name, phone, address);
+                System.out.printf("%-15s %-30s %-12s %-10s%n", id, name, phone, address);
                 }
                 }else{
                     System.out.println("There is no User registered !");
@@ -66,12 +66,12 @@ public class UserManager {
 
     public void displayRestaurant(){
         if(restaurantList.size>0){
-                System.out.printf("%-15s %-20s %-10s%n ", "ID", "Name", "Address" ); //display all the user in formatted and clean way
+                System.out.printf("%-15s %-30s %-10s%n ", "ID", "Name", "Address" ); //display all the user in formatted and clean way
                 for (int i = 0; i < restaurantList.size; i++) {
                     String id = restaurantList.get(i).getId();
                     String name = restaurantList.get(i).getName();
                     String address = restaurantList.get(i).getAddress();
-                System.out.printf("%-15s %-20s %-10s%n", id, name, address);
+                System.out.printf("%-15s %-30s %-10s%n", id, name, address);
                 }
                 }else{
                     System.out.println("There is no Restaurant registered !");
