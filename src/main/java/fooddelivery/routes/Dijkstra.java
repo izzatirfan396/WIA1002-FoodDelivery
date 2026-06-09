@@ -4,10 +4,9 @@ import fooddelivery.utils.InputHelper;
 import java.util.Scanner;
 
 /**
- * Dijkstra's Shortest Path Algorithm
+ * Finds the shortest delivery route between two locations.
  * Member: HARITH
  * 
- * Finds the shortest delivery route between two locations.
  */
 public class Dijkstra {
 
@@ -32,7 +31,7 @@ public class Dijkstra {
         boolean[] visited = new boolean[n];
         int[] parent = new int[n]; 
         
-        // 1. Initialise tracking blocks
+        // Initialise tracking blocks
         for (int i = 0; i < n; i++) {
             dist[i] = INF; // Initialize all elements to infinity
             visited[i] = false;
@@ -40,7 +39,7 @@ public class Dijkstra {
         }
         dist[uSrc] = 0; // Source cost is zero
         
-        // 3. Main processing exploration passes
+        // Main processing exploration passes
         for (int count = 0; count < n - 1; count++) {
             // Locate the non-visited element with the lowest running calculation value
             int u = -1;
@@ -52,9 +51,9 @@ public class Dijkstra {
                 }
             }
             
-            if (u == -1) break; // Remaining unvisited vertices are unreachable
+            if (u == -1) break;
             
-            visited[u] = true; // Mark node as visited
+            visited[u] = true;
             
             // Relax neighbors
             int[][] matrix = graph.getAdjMatrix();
@@ -62,19 +61,20 @@ public class Dijkstra {
                 if (!visited[v] && matrix[u][v] != INF && dist[u] != INF) {
                     if (dist[u] + matrix[u][v] < dist[v]) {
                         dist[v] = dist[u] + matrix[u][v];
-                        parent[v] = u; // Map ancestry tracking reference
+                        parent[v] = u;
                     }
                 }
             }
         }
         
-        // 4. Output results
+        // Output results
         if (dist[vDst] == INF) {
             System.out.println("\nResult: No accessible route found linking '" + source + "' to '" + destination + "'.");
         } else {
             System.out.println("\n============================================");
             System.out.println("OPTIMAL ROUTE COMPUTATION SUCCESSFUL");
             System.out.println("============================================");
+            System.out.println();
             System.out.println("Total Delivery Cost/Distance: " + dist[vDst] + " meters");
             System.out.print("Route Path Mapping: ");
             printPathTrace(vDst, parent);
@@ -97,20 +97,20 @@ public class Dijkstra {
         int choice = -1;
         
         do {
-            System.out.println("\n=============================================");
-            System.out.println("MODULE 4: SYSTEM ROUTE FINDER & ROAD ENGINE");
-            System.out.println("=============================================");
+            System.out.println("--- Route Finder ---");
+            System.out.println();
             System.out.println("1. Add Map Location (Vertex)");
             System.out.println("2. Add Road Connector Line (Weighted Edge)");
             System.out.println("3. Display Structural Network Layout Graph");
             System.out.println("4. Compute Shortest Route (Dijkstra Calculation)");
-            System.out.println("5. Return to Main Menu");
-            System.out.print("Please enter your choice (1-5): ");
+            System.out.println("0. Return to Main Menu");
+            System.out.println("------------------------------------");
+            System.out.print("Enter choice: ");
             
-            choice = InputHelper.readInt(sc); // Utilise shared helper validation metrics
+            choice = InputHelper.readInt(sc);
             switch (choice) {
                 case 1:
-                    System.out.print("Enter Location Node Name (e.g. Subang, PJ): ");
+                    System.out.print("Enter Location Node Name: ");
                     String nodeName = InputHelper.readString(sc);
                     graph.addLocation(nodeName);
                     break;
@@ -133,8 +133,8 @@ public class Dijkstra {
                     String dest = InputHelper.readString(sc);
                     findShortestPath(src, dest);
                     break;
-                case 5:
-                    System.out.println("Returning back to central integration layer...");
+                case 0:
+                    System.out.println("Returning to Main Menu !");
                     break;
                 default:
                     System.out.println("Invalid input selection. Choose option between 1 and 5.");

@@ -4,10 +4,6 @@ package fooddelivery.orders;
  * Undo last order cancellation using a Stack.
  * Member: FARISH CHAI
  *
- * Data Structure: Stack (linked-list based, implement manually)
- * Responsibilities:
- * - Push a cancelled order onto the stack
- * - Pop (undo) the last cancellation
  */
 public class UndoStack {
 

@@ -7,7 +7,6 @@ import java.util.Scanner;
  * Module 2 - Order Processing using a Queue
  * Member: FARISH CHAI
  *
- * Data Structure: Queue (linked-list based, implement manually)
  */
 public class OrderQueue {
 
@@ -26,8 +25,7 @@ public class OrderQueue {
     private Node tail; // Points to the back of the queue
     private int size;
     
-    // FIX 1: Track orderIdCounter as a class-level instance variable 
-    // so it doesn't reset to 1 every time showMenu() is executed.
+    //Track orderIdCounter as a class-level instance variable 
     private int orderIdCounter = 1; 
 
     public OrderQueue() {
@@ -91,7 +89,7 @@ public class OrderQueue {
             return;
         }
         
-        System.out.println("\n--- Current Order Queue (FIFO) ---");
+        System.out.println("\n--- Current Order Queue (FIFO) ---\n");
         Node current = head;
         int position = 1;
         while (current != null) {
@@ -106,17 +104,16 @@ public class OrderQueue {
         int orderChoice = -1;
 
         while (true) {
-            System.out.println("\n=== Module 2: Order Processing Menu ===");
+            System.out.println("\n--- Order Processing Menu ---\n");
             System.out.println("1. View Order Queue");
             System.out.println("2. Process Next Order (Dequeue)");
             System.out.println("3. Check Front Order (Peek)");
-            System.out.println("4. Sim: Place New Mock Order");
-            System.out.println("5. Sim: Cancel Current Order (Push to Stack)");
-            System.out.println("6. Sim: Undo Last Cancellation (Pop from Stack)");
-            System.out.println("0. Back to Main System");
+            System.out.println("4. Place New Mock Order");
+            System.out.println("5. Cancel Current Order (Push to Stack)");
+            System.out.println("6. Undo Last Cancellation (Pop from Stack)");
+            System.out.println("0. Back to Main System\n");
             System.out.print("Enter choice: ");
 
-            // FIX 2: Standardize menu choice parsing using your existing InputHelper
             orderChoice = InputHelper.readInt(sc);
 
             switch (orderChoice) {
@@ -176,7 +173,7 @@ public class OrderQueue {
                     break;
 
                 case 0:
-                    System.out.println("Returning to Core Panel...");
+                    System.out.println("Returning to Main Menu");
                     return; 
 
                 default:

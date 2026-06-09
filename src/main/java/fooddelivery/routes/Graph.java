@@ -1,14 +1,9 @@
 package fooddelivery.routes;
 
 /**
- * Module 4 - Delivery Map using a Weighted Graph
+ * Graph (Adjacency Matrix configuration)
  * Member: HARITH
  *
- * Data Structure: Graph (Adjacency Matrix configuration)
- * Responsibilities:
- * - Add locations (vertices) to the map
- * - Add roads (weighted edges) between locations
- * - Support Dijkstra's algorithm for shortest path
  */
 public class Graph {
 
@@ -45,7 +40,6 @@ public class Graph {
             return;
         }
         
-        // Auto-generate a descriptive padded internal ID
         String autoId = "L" + String.format("%03d", (numLocations + 1));
         locations[numLocations] = new Location(autoId, name);
         numLocations++;
@@ -98,7 +92,6 @@ public class Graph {
         return numLocations;  
     }
     
-    // Core Helper operations required to translate labels safely into working array matrix indices
     public int getIdxByName(String name) {
         for (int i = 0; i < numLocations; i++) {
             if (locations[i].getName().equalsIgnoreCase(name)) {

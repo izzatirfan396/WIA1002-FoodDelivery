@@ -1,7 +1,7 @@
 package fooddelivery.orders;
 
 /**
- * Represents a food order placed by a customer.
+ * Represents a food order placed by a customer
  * Member: FARISH CHAI
  */
 public class Order {
@@ -11,7 +11,7 @@ public class Order {
     private String restaurantId;
     private String foodItem;
     private double totalPrice;
-    private String status; // e.g. "PENDING", "PROCESSING", "DELIVERED", "CANCELLED"
+    private String status; // such as "PENDING", "PROCESSING", "DELIVERED", "CANCELLED"
 
     public Order(String orderId, String userId, String restaurantId, String foodItem, double totalPrice) {
         this.orderId = orderId;
@@ -22,7 +22,7 @@ public class Order {
         this.status = "PENDING";
     }
 
-    // --- GETTERS ---
+    // getter methods
 
     public String getOrderId() { return orderId; }
 
@@ -36,7 +36,7 @@ public class Order {
 
     public String getStatus() { return status; }
 
-    // --- SETTERS ---
+    // setter method 
 
     public void setOrderId(String orderId) { this.orderId = orderId; }
 
@@ -50,10 +50,10 @@ public class Order {
 
     public void setStatus(String status) { this.status = status; }
 
-    // --- TO STRING ---
+    // Overrride toString() method
 
     @Override
     public String toString() {
-        return "Order{id='" + orderId + "', item='" + foodItem + "', price=" + totalPrice + ", status='" + status + "'}";
+        return "Order | ID = '" + orderId + "' | Item = '" + foodItem + "' | Price = " + totalPrice + " | Status = '" + status + "' |";
     }
 }
