@@ -106,13 +106,13 @@ public class OrderQueue {
         while (true) {
             System.out.println("\n--- Order Processing Menu ---\n");
             System.out.println("1. View Order Queue");
-            System.out.println("2. Process Next Order (Dequeue)");
-            System.out.println("3. Check Front Order (Peek)");
+            System.out.println("2. Process Next Order "); //dequeue
+            System.out.println("3. Check Front Order ");//peek
             System.out.println("4. Place New Mock Order");
-            System.out.println("5. Cancel Current Order (Push to Stack)");
-            System.out.println("6. Undo Last Cancellation (Pop from Stack)");
+            System.out.println("5. Cancel Current Order "); // push to stack
+            System.out.println("6. Undo Last Cancellation "); // pop from stack
             System.out.println("0. Back to Main System\n");
-            System.out.print("Enter choice: ");
+            System.out.println("Enter choice: ");
 
             orderChoice = InputHelper.readInt(sc);
 
@@ -138,14 +138,14 @@ public class OrderQueue {
                     System.out.println("\n--- Create Mock Order ---");
 
                     // FIX 3: Leverage InputHelper to prevent trailing scanner buffer errors
-                    System.out.print("Enter Food Item: ");
+                    System.out.println("Enter Food Item: ");
                     String food = InputHelper.readString(sc);
 
-                    System.out.print("Enter Total Price: ");
+                    System.out.println("Enter Total Price: ");
                     double price = InputHelper.readDouble(sc);
                     
                     while (price < 0) {
-                        System.out.print("[ERROR]: Price cannot be negative. Re-enter Price: ");
+                        System.out.println("[ERROR]: Price cannot be negative. Re-enter Price: ");
                         price = InputHelper.readDouble(sc);
                     }
 
