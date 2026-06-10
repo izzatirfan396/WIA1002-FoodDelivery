@@ -150,7 +150,7 @@ public class FoodBST {
                 if (line.isEmpty()) continue;
                 choice = Integer.parseInt(line);
             } catch (Exception e) {
-                out.println("Invalid input. Please enter a number.");
+                out.print("Invalid input. Please enter a number.");
                 out.flush();
                 continue;
             }
