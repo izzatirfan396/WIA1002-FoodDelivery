@@ -142,7 +142,7 @@ public class FoodBST {
             out.println("5. Fast Lookup by Item ID (HashMap Cache Verification)");
             out.println("0. Back to Main Menu");
             out.println("---------------------------------");
-            out.println("Enter choice: ");
+            out.print("Enter choice: ");
             out.flush();
 
             try {
@@ -157,7 +157,7 @@ public class FoodBST {
 
             switch (choice) {
                 case 1:
-                    out.println("Enter Item ID:"); 
+                    out.print("Enter Item ID:"); 
                     out.flush(); 
                     String id = sharedSc.nextLine().trim();
 
@@ -168,7 +168,7 @@ public class FoodBST {
                         break;
                     }
 
-                    out.println("Enter Food Name:"); 
+                    out.print("Enter Food Name:"); 
                     out.flush(); 
                     String name = sharedSc.nextLine().trim();
 
@@ -180,7 +180,7 @@ public class FoodBST {
                     }
 
                     // Guard 3: Autocomplete logic so typos/short words match the right category
-                    out.println("Enter Category (Fast Food, Healthy, Beverage, Dessert):"); 
+                    out.print("Enter Category (Fast Food, Healthy, Beverage, Dessert):"); 
                     out.flush(); 
                     String inputCat = sharedSc.nextLine().trim().toLowerCase();
                     String cat = "Other"; 
@@ -200,7 +200,7 @@ public class FoodBST {
 
                     // Guard 4: Try-catch block to stop the app from crashing if they type text or letters for price
                     double price = 0.0;
-                    out.println("Enter Price:"); 
+                    out.print("Enter Price:"); 
                     out.flush(); 
                     try {
                         price = Double.parseDouble(sharedSc.nextLine().trim());
@@ -209,7 +209,7 @@ public class FoodBST {
                         out.flush();
                     }
 
-                    out.println("Enter Restaurant ID:"); 
+                    out.print("Enter Restaurant ID:"); 
                     out.flush(); 
                     String restId = sharedSc.nextLine().trim();
 
@@ -219,7 +219,7 @@ public class FoodBST {
                     break;
 
                 case 2:
-                    out.println("Enter food name to search:"); out.flush();
+                    out.print("Enter food name to search:"); out.flush();
                     FoodItem found = search(sharedSc.nextLine().trim());
                     out.println(found != null ? "[Found]: " + found : "Not found."); out.flush();
                     break;
@@ -229,7 +229,7 @@ public class FoodBST {
                     break;
 
                 case 4:
-                    out.println("Enter name to remove:"); out.flush();
+                    out.print("Enter name to remove:"); out.flush();
                     String nameToDelete = sharedSc.nextLine().trim();
                     
                     // Guard 5: Give clear feedback so the user actually knows if deletion worked
@@ -242,7 +242,7 @@ public class FoodBST {
                     break;
 
                 case 5:
-                    out.println("Enter ID for HashMap lookup:"); out.flush();
+                    out.print("Enter ID for HashMap lookup:"); out.flush();
                     FoodItem cached = fastCache.get(sharedSc.nextLine().trim());
                     out.println(cached != null ? "[Cache Hit]: " + cached : "Not in cache."); out.flush();
                     break;
