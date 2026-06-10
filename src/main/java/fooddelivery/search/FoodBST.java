@@ -112,7 +112,7 @@ public class FoodBST {
             out.println("5. Fast Lookup by Item ID (HashMap Cache Verification)");
             out.println("0. Back to Main Menu");
             out.println("---------------------------------");
-            out.println("Enter choice: ");
+            out.print("Enter choice: ");
             out.flush();
 
             try {
@@ -127,16 +127,16 @@ public class FoodBST {
 
             switch (choice) {
                 case 1:
-                    out.println("Enter Item ID:"); out.flush(); String id = sharedSc.nextLine().trim();
-                    out.println("Enter Food Name:"); out.flush(); String name = sharedSc.nextLine().trim();
-                    out.println("Enter Category:"); out.flush(); String cat = sharedSc.nextLine().trim();
-                    out.println("Enter Price:"); out.flush(); double price = Double.parseDouble(sharedSc.nextLine().trim());
-                    out.println("Enter Restaurant ID:"); out.flush(); String restId = sharedSc.nextLine().trim();
+                    out.print("Enter Item ID:"); out.flush(); String id = sharedSc.nextLine().trim();
+                    out.print("Enter Food Name:"); out.flush(); String name = sharedSc.nextLine().trim();
+                    out.print("Enter Category:"); out.flush(); String cat = sharedSc.nextLine().trim();
+                    out.print("Enter Price:"); out.flush(); double price = Double.parseDouble(sharedSc.nextLine().trim());
+                    out.print("Enter Restaurant ID:"); out.flush(); String restId = sharedSc.nextLine().trim();
                     insert(new FoodItem(id, name, cat, price, restId));
                     out.println(">>> " + name + " added!"); out.flush();
                     break;
                 case 2:
-                    out.println("Enter food name to search:"); out.flush();
+                    out.print("Enter food name to search:"); out.flush();
                     FoodItem found = search(sharedSc.nextLine().trim());
                     out.println(found != null ? "[Found]: " + found : "Not found."); out.flush();
                     break;
@@ -144,12 +144,12 @@ public class FoodBST {
                     displayInOrder();
                     break;
                 case 4:
-                    out.println("Enter name to remove:"); out.flush();
+                    out.print("Enter name to remove:"); out.flush();
                     delete(sharedSc.nextLine().trim());
                     out.println(">>> Processed."); out.flush();
                     break;
                 case 5:
-                    out.println("Enter ID for HashMap lookup:"); out.flush();
+                    out.print("Enter ID for HashMap lookup:"); out.flush();
                     FoodItem cached = fastCache.get(sharedSc.nextLine().trim());
                     out.println(cached != null ? "[Cache Hit]: " + cached : "Not in cache."); out.flush();
                     break;

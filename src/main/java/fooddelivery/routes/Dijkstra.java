@@ -99,7 +99,7 @@ public class Dijkstra {
             System.out.println("--- Route Finder ---");
             System.out.println();
             System.out.println("1. Add Map Location"); // Vertex
-            System.out.println("2. Add Route Distance"); // Weighted Edge
+            System.out.println("2. Add Route Distance in Meter"); // Weighted Edge
             System.out.println("3. Display All Routes Layout Graph");
             System.out.println("4. Compute Shortest Route"); // Dijkstra Calculation
             System.out.println("0. Return to Main Menu");
@@ -118,7 +118,7 @@ public class Dijkstra {
                     String from = InputHelper.readString(sc);
                     System.out.print("Enter Target Destination (To Name): ");
                     String to = InputHelper.readString(sc);
-                    System.out.print("Enter Path Metric Distance Weight: ");
+                    System.out.print("Enter Distance in Meter: ");
                     int weight = InputHelper.readInt(sc);
                     graph.addRoad(from, to, weight);
                     break;

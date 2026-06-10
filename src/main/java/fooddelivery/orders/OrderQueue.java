@@ -112,7 +112,7 @@ public class OrderQueue {
             System.out.println("5. Cancel Current Order "); // push to stack
             System.out.println("6. Undo Last Cancellation "); // pop from stack
             System.out.println("0. Back to Main System\n");
-            System.out.println("Enter choice: ");
+            System.out.print("Enter choice: ");
 
             orderChoice = InputHelper.readInt(sc);
 
@@ -141,10 +141,10 @@ public class OrderQueue {
                 case 4:
                     System.out.println("\n--- Create Mock Order ---");
 
-                    System.out.println("Enter Food Item: ");
+                    System.out.print("Enter Food Item: ");
                     String food = InputHelper.readString(sc);
 
-                    System.out.println("Enter Total Price: ");
+                    System.out.print("Enter Total Price: ");
                     double price = InputHelper.readDouble(sc);
                     
                     while (price < 0) {
