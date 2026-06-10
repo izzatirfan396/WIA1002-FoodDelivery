@@ -13,7 +13,7 @@ public class Graph {
     private static final int MAX = 20; // Maximum allowed locations
     private static final int INF = Integer.MAX_VALUE;
 
-    public Graph() {  
+    public Graph() { // Constructs graph structure, initializes location arrays and adjacency tracking matrices
         this.numLocations = 0;  // Initialises graph structure
         this.locations = new Location[MAX];
         this.adjMatrix = new int[MAX][MAX];
@@ -30,7 +30,7 @@ public class Graph {
         }
     }
 
-    public void addLocation(String name) {  
+    public void addLocation(String name) {  // Registers a new delivery location and assigns it an auto-incremented ID
         if (numLocations >= MAX) {
             System.out.println("Error: Graph map has reached maximum capacity!");
             return;
@@ -46,7 +46,7 @@ public class Graph {
         System.out.println("Successfully added map location: " + name + " (" + autoId + ")");
     }
 
-    public void addRoad(String from, String to, int distance) {  
+    public void addRoad(String from, String to, int distance) {  // Maps an undirected, weighted connection edge between two verified nodes
         int u = getIdxByName(from);
         int v = getIdxByName(to);
         
@@ -61,7 +61,7 @@ public class Graph {
         System.out.println("Road mapped successfully: " + from + " <-> " + to + " (" + distance + "m)");
     }
 
-    public void display() {  
+    public void display() {  // Prints out the current delivery network layout in a tabular Adjacency Matrix grid view
         if (numLocations == 0) {
             System.out.println("\n[The delivery map network contains no node data entries]");
             return;
@@ -88,11 +88,11 @@ public class Graph {
         System.out.println("---------------------------------------------------------");
     }
 
-    public int getNumLocations() {  
+    public int getNumLocations() {  // Returns the total number of registered locations currently stored in the map
         return numLocations;  
     }
     
-    public int getIdxByName(String name) {
+    public int getIdxByName(String name) { // Performs a case-insensitive lookup to find the index key corresponding to a node name
         for (int i = 0; i < numLocations; i++) {
             if (locations[i].getName().equalsIgnoreCase(name)) {
                 return i;
@@ -101,14 +101,14 @@ public class Graph {
         return -1;
     }
     
-    public Location getLocationByIdx(int index) {
+    public Location getLocationByIdx(int index) { // Fetches the concrete Location object instance stored at a particular internal array index
         if (index >= 0 && index < numLocations) {
             return locations[index];
         }
         return null;
     }
     
-    public int[][] getAdjMatrix() {
+    public int[][] getAdjMatrix() { // Exposes the raw 2D weight matrix tracking connection values directly to external routing engines
         return adjMatrix;
     }
 }

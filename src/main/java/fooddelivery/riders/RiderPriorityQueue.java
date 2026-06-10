@@ -17,13 +17,12 @@ public class RiderPriorityQueue {
     private int size;
     private static final int CAPACITY = 50;
 
-    public RiderPriorityQueue() {
+    public RiderPriorityQueue() { //Constructor to create the list with a maximum limit
         heap = new Rider[CAPACITY];
         size = 0;
     }
 
-    public void insert(Rider rider) {
-        // TODO (M3): insert rider into heap, then sift up
+    public void insert(Rider rider) { //Add a new rider into the array list
         if (size >= CAPACITY) {
             System.out.println("Error: Rider Queue is at maximum capacity!");
             return;
@@ -34,18 +33,16 @@ public class RiderPriorityQueue {
         System.out.println("Successfully registered: " + rider.getName());
     }
 
-    public Rider assignRider() {
-        // TODO (M3): remove and return the min-priority rider (root of heap), then sift down
+    public Rider assignRider() { //Remove and get the best rider from the top of the queue
         if (isEmpty()) {
             System.out.println("No riders available to assign!");
             return null;
         }
 
-        Rider optimalRider = heap[0];
-        //Flag the assigned rider as unavailable
-        optimalRider.setAvailable(false);
+        Rider optimalRider = heap[0]; //Save the top rider at index 0
+        optimalRider.setAvailable(false); //Change rider status to false because they are now busy
 
-        //Replace root with the last element in the tree array
+        //Replace the top rider with the very last rider in the array list
         heap[0] = heap[size - 1];
         heap[size - 1] = null; //Prevent memory leak;
         size--;
@@ -56,20 +53,18 @@ public class RiderPriorityQueue {
         return optimalRider;
     }
 
-    public Rider peek() {
-        // TODO (M3): return the min-priority rider without removing
+    public Rider peek() { //Look at the best rider without removing them
         if (isEmpty()) {
             return null;
         }
         return heap[0];
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty() { //Check if there are zero riders in the system
         return size == 0;
     }
 
-    private void siftUp(int index) {
-        // TODO (M3): bubble up to maintain heap property
+    private void siftUp(int index) { //Move a node upwards until the heap structure is correct
         while (index > 0) {
             int parentIndex = (index - 1) / 2;
 
@@ -83,8 +78,7 @@ public class RiderPriorityQueue {
         }
     }
 
-    private void siftDown(int index) {
-        // TODO (M3): bubble down to maintain heap property
+    private void siftDown(int index) { //Move a node downwards until the heap structure is correct
         while (index < size) {
             int leftChild = 2 * index + 1;
             int rightChild = 2 * index + 2;
@@ -105,25 +99,23 @@ public class RiderPriorityQueue {
                 break;
             }
 
-            swap(index, smallest);
+            swap(index, smallest); //Swap the parent with the smallest child rider
             index = smallest;
         }
     }
 
-    private void swap(int i, int j) {
+    private void swap(int i, int j) { //Switch the places of two riders in the array
         Rider temp = heap[i];
         heap[i] = heap[j];
         heap[j] = temp;
     }
 
     public void display() {
-        // TODO (M3): print all riders currently in the queue
         if (isEmpty()) {
             System.out.println("\n--- CURRENT AVAILABLE DELIVEY RIDERS ---");
             System.out.println("No active riders available in the dispatch system.");
             return;
         }
-
         System.out.println("\n=================================================");
         System.out.println("     PRIORITY DISPATCH SYSTEM LAYOUT (MIN-HEAP)  ");
         System.out.println("=================================================");
@@ -140,8 +132,7 @@ public class RiderPriorityQueue {
         System.out.println("-------------------------------------------------");
     }
 
-    public void showMenu(Scanner sc) {
-        // TODO (M3): implement the sub-menu for this module
+    public void showMenu(Scanner sc) { //Create variables outside the loop so all options can reuse them easily
         int choice = -1;
 
         do {
@@ -164,7 +155,7 @@ public class RiderPriorityQueue {
                     int priority = InputHelper.readInt(sc);
 
                     Rider newRider = new Rider(id, name, priority);
-                    insert(newRider);
+                    insert(newRider); //Create the new rider object and add them into the array queue
                     break;
 
                 case 2:
@@ -182,7 +173,7 @@ public class RiderPriorityQueue {
                     break;
 
                 case 3:
-                    Rider assigned = assignRider();
+                    Rider assigned = assignRider(); // Run the dispatch method to remove the best rider from the top
                     if (assigned != null) {
                         System.out.println("\n[SUCCESS] Order Dispatched!");
                         System.out.println("Assigned to Rider: [" + assigned.getRiderId() + "] " + assigned.getName());
@@ -190,16 +181,16 @@ public class RiderPriorityQueue {
                     break;
 
                 case 4:
-                    display();
+                    display(); // Call the display table method to show all active riders
                     break;
 
-                case 5:
+                case 0:
                     System.out.println("Returning back to central integration layer...");
                     break;
 
                 default:
                     System.out.println("Invalid input selection. Choose option between 1 and 5.");
             }
-        } while (choice != 5);
+        } while (choice != 0); // Repeat this sub-menu loop until user types choice 0
     }
 }

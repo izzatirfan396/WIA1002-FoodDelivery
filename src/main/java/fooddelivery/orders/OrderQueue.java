@@ -117,10 +117,12 @@ public class OrderQueue {
             orderChoice = InputHelper.readInt(sc);
 
             switch (orderChoice) {
+                // View All Order
                 case 1:
                     display();
                     break;
-
+                
+                // Process Next Order
                 case 2:
                     Order processed = dequeue();
                     if (processed != null) {
@@ -128,16 +130,17 @@ public class OrderQueue {
                         System.out.println("Dispatched to Kitchen: " + processed);
                     }
                     break;
-
+                    
+                // Check the next highest priority order
                 case 3:
                     Order front = peek();
                     if (front != null) System.out.println("Next up: " + front);
                     break;
-
+                    
+                // Place New Order
                 case 4:
                     System.out.println("\n--- Create Mock Order ---");
 
-                    // FIX 3: Leverage InputHelper to prevent trailing scanner buffer errors
                     System.out.println("Enter Food Item: ");
                     String food = InputHelper.readString(sc);
 
@@ -153,7 +156,8 @@ public class OrderQueue {
                     System.out.println("\nExecuting operational enqueue...");
                     enqueue(new Order(generatedId, "USER-101", "REST-707", food, price));
                     break;
-
+                
+                // Cancel current order
                 case 5:
                     Order toCancel = dequeue();
                     if (toCancel != null) {
@@ -162,7 +166,8 @@ public class OrderQueue {
                         System.out.println("Cancelled: " + toCancel.getOrderId() + " moved to history.");
                     }
                     break;
-
+                
+                // Undo Last Cancellation
                 case 6:
                     Order revertedOrder = undoStack.pop();
                     if (revertedOrder != null) {
@@ -171,7 +176,8 @@ public class OrderQueue {
                         System.out.println("Restored back to queue: " + revertedOrder.getOrderId());
                     }
                     break;
-
+                
+                // Back to Main System
                 case 0:
                     System.out.println("Returning to Main Menu");
                     return; 

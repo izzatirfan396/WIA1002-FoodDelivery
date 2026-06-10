@@ -40,7 +40,7 @@ public class Main {
             System.out.println("5. Food Search Menu");
             System.out.println("0. Exit");
             System.out.println("------------------------------------");
-            System.out.println("Enter choice: ");
+            System.out.print("Enter choice: ");
 
             try {
                 String input = sc.nextLine().trim();

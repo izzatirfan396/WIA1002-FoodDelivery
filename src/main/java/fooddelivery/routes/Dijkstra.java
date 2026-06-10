@@ -13,11 +13,11 @@ public class Dijkstra {
     private Graph graph;
     private static final int INF = Integer.MAX_VALUE;
 
-    public Dijkstra(Graph graph) {  
+    public Dijkstra(Graph graph) { // Constructs a Dijkstra router instance with a reference to the shared layout graph 
         this.graph = graph;  
     }
 
-    public void findShortestPath(String source, String destination) {  
+    public void findShortestPath(String source, String destination) {  // Executes Dijkstra's algorithm to calculate and print the absolute shortest path between two node names
         int uSrc = graph.getIdxByName(source);
         int vDst = graph.getIdxByName(destination);
         
@@ -54,8 +54,7 @@ public class Dijkstra {
             if (u == -1) break;
             
             visited[u] = true;
-            
-            // Relax neighbors
+           
             int[][] matrix = graph.getAdjMatrix();
             for (int v = 0; v < n; v++) {
                 if (!visited[v] && matrix[u][v] != INF && dist[u] != INF) {
@@ -84,7 +83,7 @@ public class Dijkstra {
     }
     
     // Recursive tracker logic for parsing historical edge branches sequentially
-    private void printPathTrace(int targetIdx, int[] parent) {
+    private void printPathTrace(int targetIdx, int[] parent) { // Recursively backtracks from targetIdx using the parent array to print the path forward sequential order
         if (parent[targetIdx] == -1) {
             System.out.print(graph.getLocationByIdx(targetIdx).getName());
             return;
@@ -93,16 +92,16 @@ public class Dijkstra {
         System.out.print(" -> " + graph.getLocationByIdx(targetIdx).getName());
     }
 
-    public void showMenu(Scanner sc) {  
+    public void showMenu(Scanner sc) {  // Displays the interactive console sub-menu UI loop for executing graph actions and route calculations
         int choice = -1;
         
         do {
             System.out.println("--- Route Finder ---");
             System.out.println();
-            System.out.println("1. Add Map Location (Vertex)");
-            System.out.println("2. Add Road Connector Line (Weighted Edge)");
-            System.out.println("3. Display Structural Network Layout Graph");
-            System.out.println("4. Compute Shortest Route (Dijkstra Calculation)");
+            System.out.println("1. Add Map Location"); // Vertex
+            System.out.println("2. Add Route Distance"); // Weighted Edge
+            System.out.println("3. Display All Routes Layout Graph");
+            System.out.println("4. Compute Shortest Route"); // Dijkstra Calculation
             System.out.println("0. Return to Main Menu");
             System.out.println("------------------------------------");
             System.out.print("Enter choice: ");
@@ -137,8 +136,8 @@ public class Dijkstra {
                     System.out.println("Returning to Main Menu !");
                     break;
                 default:
-                    System.out.println("Invalid input selection. Choose option between 1 and 5.");
+                    System.out.println("Invalid input selection. Choose option between 0 and 4.");
             }
-        } while (choice != 5);
+        } while (choice != 0);
     }  
 }
