@@ -6,7 +6,7 @@ import java.io.PrintStream;
 /**
  * Module 5 - Food Search using a Binary Search Tree
  * Member: ZUL DANIAL
- * Finalized to resolve NetBeans console buffer/lag issues.
+ * Finalized to resolve NetBeans console buffer/lag issues and Scanner deadlocks.
  */
 public class FoodBST {
 
@@ -101,7 +101,6 @@ public class FoodBST {
     }
 
     public void showMenu(Scanner sharedSc) {
-        Scanner sc = new Scanner(System.in);
         int choice = -1;
 
         do {
@@ -117,7 +116,7 @@ public class FoodBST {
             out.flush();
 
             try {
-                String line = sc.nextLine().trim();
+                String line = sharedSc.nextLine().trim();
                 if (line.isEmpty()) continue;
                 choice = Integer.parseInt(line);
             } catch (Exception e) {
@@ -128,17 +127,17 @@ public class FoodBST {
 
             switch (choice) {
                 case 1:
-                    out.println("Enter Item ID:"); out.flush(); String id = sc.nextLine().trim();
-                    out.println("Enter Food Name:"); out.flush(); String name = sc.nextLine().trim();
-                    out.println("Enter Category:"); out.flush(); String cat = sc.nextLine().trim();
-                    out.println("Enter Price:"); out.flush(); double price = Double.parseDouble(sc.nextLine().trim());
-                    out.println("Enter Restaurant ID:"); out.flush(); String restId = sc.nextLine().trim();
+                    out.println("Enter Item ID:"); out.flush(); String id = sharedSc.nextLine().trim();
+                    out.println("Enter Food Name:"); out.flush(); String name = sharedSc.nextLine().trim();
+                    out.println("Enter Category:"); out.flush(); String cat = sharedSc.nextLine().trim();
+                    out.println("Enter Price:"); out.flush(); double price = Double.parseDouble(sharedSc.nextLine().trim());
+                    out.println("Enter Restaurant ID:"); out.flush(); String restId = sharedSc.nextLine().trim();
                     insert(new FoodItem(id, name, cat, price, restId));
                     out.println(">>> " + name + " added!"); out.flush();
                     break;
                 case 2:
                     out.println("Enter food name to search:"); out.flush();
-                    FoodItem found = search(sc.nextLine().trim());
+                    FoodItem found = search(sharedSc.nextLine().trim());
                     out.println(found != null ? "[Found]: " + found : "Not found."); out.flush();
                     break;
                 case 3:
@@ -146,12 +145,12 @@ public class FoodBST {
                     break;
                 case 4:
                     out.println("Enter name to remove:"); out.flush();
-                    delete(sc.nextLine().trim());
+                    delete(sharedSc.nextLine().trim());
                     out.println(">>> Processed."); out.flush();
                     break;
                 case 5:
                     out.println("Enter ID for HashMap lookup:"); out.flush();
-                    FoodItem cached = fastCache.get(sc.nextLine().trim());
+                    FoodItem cached = fastCache.get(sharedSc.nextLine().trim());
                     out.println(cached != null ? "[Cache Hit]: " + cached : "Not in cache."); out.flush();
                     break;
             }
